@@ -5,7 +5,7 @@ import styles from './Header.module.css'
 const Header = () => {
   return (
     <header className={styles.header}>
-      <h1>React + TS Todo</h1>
+      <h1>Lista Todo</h1>
     </header>
   )
 }

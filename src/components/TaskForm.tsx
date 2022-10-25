@@ -1,9 +1,12 @@
 import React, {useState, ChangeEvent, FormEvent, useEffect} from 'react'
-import { render } from 'react-dom'
+
 
 import styles from './TaskForm.module.css'
 
 import {ITask} from '../interface/Tasks'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -11,17 +14,34 @@ type Props = {
   btnText: string
   taskList: ITask[]
   setTaskList?: React.Dispatch<React.SetStateAction<ITask[]>>
+  task?: ITask | null
+  handleUpdate?(id:number, title: string,  difficulty: number): void
 }
 
-const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
+const TaskForm = ({btnText, taskList, setTaskList, task, handleUpdate}: Props) => {
   const [id, setId] = useState<number>(0)
   const [title, setTitle] =useState<string>('')
   const [difficulty, setDifficulty] = useState<number>(0)
 
+  const notify = () => { difficulty >= 11 ? toast("Wow so easy!") : toast('Sim foi adicionado') }
+
+  //TRAZ AS INFORMAÇÕES ATUALIZADAS PARA TELA DE EDIÇÃO
+  useEffect(() => {
+    if (task) {
+      setId(task.id)
+      setTitle(task.title)
+      setDifficulty(task.difficulty)
+    }
+  }, [task])
+
+
   const addTaskHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const id = Math.floor(Math.random() * 1000)
+    if(handleUpdate) {
+      handleUpdate(id, title, difficulty)
+    } else {
+      const id = Math.floor(Math.random() * 1000)
 
     const newTask: ITask = { id, title, difficulty }
 
@@ -31,31 +51,35 @@ const TaskForm = ({btnText, taskList, setTaskList}: Props) => {
     setDifficulty(0)
 
     console.log(taskList)
+    }
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    
     if(e.target.name === 'title') {
       setTitle(e.target.value)
-    } else {
+      
+    } else{
       setDifficulty(parseInt(e.target.value))
-    }
-    /* {console.log(title)}
-    {console.log(difficulty)} */
+    } 
+    
   }
-  
+
 
   return (
-    <form onSubmit={addTaskHandler} className={styles.form}>
+  <form onSubmit={addTaskHandler} className={styles.form}>
     <div className={styles.input_container}>
       <label htmlFor="title">Titulo:</label>
       <input type="text" name='title' placeholder='Título da tarefa' onChange={handleChange} value={title}/>
     </div>
     <div className={styles.input_container}>
-    <label htmlFor="difficulty">Dificuldade:</label>
+      <label htmlFor="difficulty">Dificuldade:(Entre 0 á 10)</label>
     <input type="text" name='difficulty' placeholder='Dificuldade da tarefa' onChange={handleChange} value={difficulty}/>
-  </div>
-  <input type="submit" value={btnText} />
+    </div>
+    {difficulty <= 10 ? <input type="submit" value={btnText} /> : <h3 className='attention'>Escolha números entre 0 á 10</h3>} 
+    <ToastContainer />
   </form>
+
   )
 }
 
