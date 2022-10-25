@@ -2,7 +2,7 @@
 
 ## Aplicação para criação de coisas à fazer
 
-![alt](../list_todo/public/Gif-ToDo.gif)
+![alt](/public/Gif-ToDo.gif)
 
 ### 💻 Tecnologias
 
