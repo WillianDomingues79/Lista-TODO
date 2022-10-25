@@ -5,9 +5,6 @@ import styles from './TaskForm.module.css'
 
 import {ITask} from '../interface/Tasks'
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 
 type Props = {
@@ -23,7 +20,6 @@ const TaskForm = ({btnText, taskList, setTaskList, task, handleUpdate}: Props) =
   const [title, setTitle] =useState<string>('')
   const [difficulty, setDifficulty] = useState<number>(0)
 
-  const notify = () => { difficulty >= 11 ? toast("Wow so easy!") : toast('Sim foi adicionado') }
 
   //TRAZ AS INFORMAÇÕES ATUALIZADAS PARA TELA DE EDIÇÃO
   useEffect(() => {
@@ -74,10 +70,10 @@ const TaskForm = ({btnText, taskList, setTaskList, task, handleUpdate}: Props) =
     </div>
     <div className={styles.input_container}>
       <label htmlFor="difficulty">Dificuldade:(Entre 0 á 10)</label>
-    <input type="text" name='difficulty' placeholder='Dificuldade da tarefa' onChange={handleChange} value={difficulty}/>
+    <input type="number" name='difficulty' placeholder='Dificuldade da tarefa' onChange={handleChange} value={difficulty} min="1" max="10"/>
     </div>
     {difficulty <= 10 ? <input type="submit" value={btnText} /> : <h3 className='attention'>Escolha números entre 0 á 10</h3>} 
-    <ToastContainer />
+    
   </form>
 
   )
