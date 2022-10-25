@@ -6,6 +6,8 @@ import styles from './App.module.css'
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 
+import {ITask} from './interface/Tasks'
+
 
 function App() {
   return (
