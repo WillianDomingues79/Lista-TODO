@@ -23,6 +23,6 @@
 
 O Projeto constitui em uma aplicação de <u>Lista ToDo</u>, para fazer inclusões, edições e retiradas de coisas à fazer.
 
-Aplicação pode ser testada -> [Aqui](https://listatodo.vercel.app/)
+Aplicação pode ser testada -> [Aqui](https://listatodo-pb9xc5dzm-williandomingues79.vercel.app/)
 
 ---
